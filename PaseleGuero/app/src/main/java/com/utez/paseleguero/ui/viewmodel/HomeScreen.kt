@@ -48,3 +48,15 @@ fun HomeScreen(
                 Icon(Icons.Default.Add, contentDescription = "Crear subasta")
             }
         }
+    ) { padding ->
+        when {
+            uiState.isLoading -> Box(
+                modifier = Modifier.fillMaxSize().padding(padding),
+                contentAlignment = Alignment.Center
+            ) { CircularProgressIndicator() }
+
+            uiState.products.isEmpty() -> Box(
+                modifier = Modifier.fillMaxSize().padding(padding),
+                contentAlignment = Alignment.Center
+            ) { Text("No hay subastas activas") }
+
