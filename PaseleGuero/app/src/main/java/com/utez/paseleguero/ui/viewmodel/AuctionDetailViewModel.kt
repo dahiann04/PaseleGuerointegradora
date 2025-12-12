@@ -34,3 +34,50 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
         bidsCount = 0,
         createdAt = 0L
     )
+    fun loadProduct() {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.apiService.getProducts()
+                val product = response.data.firstOrNull { it.id == productId }
+                _uiState.value = if (product != null) {
+                    AuctionDetailUiState(product)
+                } else {
+                    AuctionDetailUiState(emptyProduct(), error = "Producto no encontrado")
+                }
+            } catch (e: Exception) {
+                _uiState.value = AuctionDetailUiState(emptyProduct(), error = e.localizedMessage ?: "Error desconocido")
+            }
+        }
+    }
+    fun placeBid(amount: Double) {
+        val state = _uiState.value ?: return
+        val product = state.product
+
+        viewModelScope.launch {
+            _uiState.value = state.copy(isLoading = true)
+            try {
+                val bid = Bid(
+                    id = "",
+                    productId = product.id,
+                    userId = "123",
+                    amount = amount,
+                    timestamp = System.currentTimeMillis()
+                )
+
+                val apiResponse = ApiConfig.apiService.placeBid(product.id, bid)
+
+                if (apiResponse.success) {
+                    val updated = product.copy(
+                        currentPrice = amount,
+                        bidsCount = product.bidsCount + 1
+                    )
+                    _uiState.value = AuctionDetailUiState(updated)
+                } else {
+                    _uiState.value = state.copy(isLoading = false, error = "Error al ofertar")
+                }
+            } catch (e: Exception) {
+                _uiState.value = state.copy(isLoading = false, error = e.localizedMessage ?: "Error desconocido")
+            }
+        }
+    }
+
