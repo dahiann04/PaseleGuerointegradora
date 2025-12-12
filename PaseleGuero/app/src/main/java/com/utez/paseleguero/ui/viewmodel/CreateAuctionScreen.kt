@@ -140,3 +140,32 @@ fun CreateAuctionScreen(
                     label = { Text("Duración (horas)") },
                     modifier = Modifier.fillMaxWidth()
                 )
+                Button(
+                    onClick = {
+                        capturedImageFile?.let { file ->
+                            viewModel.createAuction(
+                                file = file,
+                                userId = "admin",
+                                userName = "Administrador"
+                            )
+                            Toast.makeText(context, "Subasta creada", Toast.LENGTH_SHORT).show()
+                            onNavigateBack()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = capturedImageFile != null
+                ) {
+                    Text("Crear Subasta")
+                }
+
+                uiState.error?.let { errorMsg ->
+                    Text(text = errorMsg, color = MaterialTheme.colorScheme.error)
+                }
+
+                if (uiState.isLoading) {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
+            }
+        }
+    }
+}
