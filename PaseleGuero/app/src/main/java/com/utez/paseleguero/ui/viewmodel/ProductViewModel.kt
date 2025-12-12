@@ -37,11 +37,23 @@ class ProductViewModel(private val repository: AuctionRepository) : ViewModel() 
             }
         }
     }
- 
+
     fun updateProduct(product: Product, onComplete: () -> Unit = {}) {
         viewModelScope.launch {
             try {
                 repository.updateProduct(product)
+                loadProducts()
+                onComplete()
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+    // Eliminar una subasta
+    fun deleteProduct(productId: String, onComplete: () -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                repository.deleteProduct(productId)
                 loadProducts()
                 onComplete()
             } catch (e: Exception) {
