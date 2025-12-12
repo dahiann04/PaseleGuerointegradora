@@ -77,3 +77,7 @@ fun CameraCapture(
             )
         }
     }
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(factory = { previewView }, modifier = Modifier.fillMaxSize())
+    }
+}
