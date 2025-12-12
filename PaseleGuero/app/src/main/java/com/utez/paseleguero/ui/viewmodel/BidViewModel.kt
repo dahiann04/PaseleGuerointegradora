@@ -25,3 +25,16 @@ class BidViewModel(private val repository: AuctionRepository) : ViewModel() {
             }
         }
     }
+    // Hacer una oferta
+    fun placeBid(bid: Bid, onComplete: () -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                repository.placeBid(bid)
+                loadBids(bid.productId)
+                onComplete()
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
