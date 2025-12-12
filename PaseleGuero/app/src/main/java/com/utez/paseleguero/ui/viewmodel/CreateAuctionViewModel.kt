@@ -36,3 +36,14 @@ class CreateAuctionViewModel : ViewModel() {
     fun updateStartingPrice(value: String) {
         _uiState.value = _uiState.value.copy(startingPrice = value)
     }
+    fun updateDuration(value: String) {
+        _uiState.value = _uiState.value.copy(durationHours = value)
+    }
+
+    fun updateImageUri(uri: Uri) {
+        _uiState.value = _uiState.value.copy(imageUri = uri)
+    }
+
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
+    }
