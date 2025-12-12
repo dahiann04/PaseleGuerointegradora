@@ -16,3 +16,6 @@ suspend fun getAllProducts(): List<Product> = withContext(Dispatchers.IO) {
 suspend fun createProduct(product: Product): Product? = withContext(Dispatchers.IO) {
     api.createProduct(product).data
 }
+suspend fun updateProduct(product: Product): Product? = withContext(Dispatchers.IO) {
+    api.updateProduct(product.id, product).data
+}
