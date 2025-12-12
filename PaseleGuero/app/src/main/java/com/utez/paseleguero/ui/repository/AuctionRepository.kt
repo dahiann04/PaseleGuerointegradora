@@ -10,3 +10,6 @@ class AuctionRepository {
 
     private val api = ApiConfig.apiService
 }
+suspend fun getAllProducts(): List<Product> = withContext(Dispatchers.IO) {
+    api.getProducts().data ?: emptyList()
+}
