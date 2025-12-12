@@ -98,3 +98,7 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
         val isLoading: Boolean = false,
         val error: String? = null
     )
+    private val _uiState = MutableStateFlow<AuctionDetailUiState?>(null)
+    val uiState: StateFlow<AuctionDetailUiState?> = _uiState
+
+    init { loadProduct() }
