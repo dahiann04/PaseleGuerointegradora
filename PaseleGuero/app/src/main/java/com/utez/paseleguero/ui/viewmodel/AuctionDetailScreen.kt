@@ -106,5 +106,43 @@ fun AuctionDetailScreen(
                     color = MaterialTheme.colorScheme.error
                 )
             }
+            OutlinedTextField(
+                value = bidInput,
+                onValueChange = { bidInput = it },
+                label = { Text("Nueva oferta") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Button(
+                onClick = {
+                    val amount = bidInput.toDoubleOrNull()
+                    if (amount != null && amount > product.currentPrice) {
+                        viewModel.placeBid(amount)
+                        bidInput = ""
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Ofertar")
+            }
+
+            Button(
+                onClick = { viewModel.deleteAuction(onNavigateBack) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text("Eliminar subasta")
+            }
+
+            state.error?.let {
+                Text(text = "Error: $it", color = MaterialTheme.colorScheme.error)
+            }
+        }
+    }
+}
+
 
 
