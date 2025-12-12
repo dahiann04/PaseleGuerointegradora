@@ -59,4 +59,17 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxSize().padding(padding),
                 contentAlignment = Alignment.Center
             ) { Text("No hay subastas activas") }
+            else -> LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(uiState.products) { product ->
+                    ProductCard(product) { onNavigateToDetail(product.id) }
+                }
+            }
+        }
+    }
+}
+
 
