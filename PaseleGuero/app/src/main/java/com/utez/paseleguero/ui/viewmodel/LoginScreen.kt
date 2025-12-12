@@ -74,5 +74,15 @@ fun LoginScreen(
             visualTransformation = PasswordVisualTransformation(),
             enabled = !isLoading
         )
+        if (loginError.isNotEmpty()) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = loginError,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
 
 
