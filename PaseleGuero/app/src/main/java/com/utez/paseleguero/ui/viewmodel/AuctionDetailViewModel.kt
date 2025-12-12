@@ -93,3 +93,8 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
             }
         }
     }
+    data class AuctionDetailUiState(
+        val product: Product,
+        val isLoading: Boolean = false,
+        val error: String? = null
+    )
