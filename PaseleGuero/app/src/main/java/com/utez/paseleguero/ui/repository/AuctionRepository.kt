@@ -22,3 +22,10 @@ suspend fun updateProduct(product: Product): Product? = withContext(Dispatchers.
 suspend fun deleteProduct(productId: String): Boolean = withContext(Dispatchers.IO) {
     api.deleteProduct(productId).success
 }
+suspend fun getBidsForProduct(productId: String): List<Bid> = withContext(Dispatchers.IO) {
+    api.getBids(productId).data ?: emptyList()
+}
+
+suspend fun placeBid(bid: Bid): Bid? = withContext(Dispatchers.IO) {
+    api.placeBid(bid.productId, bid).data
+}
