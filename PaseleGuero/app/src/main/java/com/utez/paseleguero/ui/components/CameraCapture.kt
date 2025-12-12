@@ -56,3 +56,24 @@ fun CameraCapture(
             Log.e("CameraCapture", "Error inicializando cámara", exc)
         }
     }
+    LaunchedEffect(captureTrigger) {
+        if (captureTrigger) {
+            val file = createImageFile()
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+            imageCapture?.takePicture(
+                outputOptions,
+                cameraExecutor,
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        onImageCaptured(Uri.fromFile(file), file)
+                        onCapturedConsumed()
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        onError(exception)
+                        onCapturedConsumed()
+                    }
+                }
+            )
+        }
+    }
