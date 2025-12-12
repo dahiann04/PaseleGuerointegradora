@@ -19,3 +19,6 @@ suspend fun createProduct(product: Product): Product? = withContext(Dispatchers.
 suspend fun updateProduct(product: Product): Product? = withContext(Dispatchers.IO) {
     api.updateProduct(product.id, product).data
 }
+suspend fun deleteProduct(productId: String): Boolean = withContext(Dispatchers.IO) {
+    api.deleteProduct(productId).success
+}
