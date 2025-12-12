@@ -71,3 +71,24 @@ class CreateAuctionViewModel : ViewModel() {
             bidsCount = 0,
             createdAt = System.currentTimeMillis()
         )
+        _uiState.value = _uiState.value.copy(isLoading = true)
+
+        viewModelScope.launch {
+            try {
+                val apiResponse = ApiConfig.apiService.createProduct(product)
+
+                if (apiResponse.success) {
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Error al crear subasta"
+                    )
+                }
+            } catch (ex: Throwable) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = ex.localizedMessage ?: "Error desconocido"
+                )
+            }
+        }
