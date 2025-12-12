@@ -15,3 +15,13 @@ class BidViewModel(private val repository: AuctionRepository) : ViewModel() {
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> get() = _error
+
+    fun loadBids(productId: String) {
+        viewModelScope.launch {
+            try {
+                _bids.value = repository.getBidsForProduct(productId)
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
