@@ -88,4 +88,23 @@ fun AuctionDetailScreen(
                 text = "Pujas: ${product.bidsCount}",
                 style = MaterialTheme.typography.bodySmall
             )
+            val timeLeft = product.endTime - System.currentTimeMillis()
+            if (timeLeft > 0) {
+                val hours = TimeUnit.MILLISECONDS.toHours(timeLeft)
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(timeLeft) % 60
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(timeLeft) % 60
+
+                Text(
+                    text = "Tiempo restante: %02d:%02d:%02d".format(hours, minutes, seconds),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            } else {
+                Text(
+                    text = "La subasta ha terminado",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
 
