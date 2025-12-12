@@ -145,3 +145,19 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
                     amount = amount,
                     timestamp = System.currentTimeMillis()
                 )
+                val apiResponse = ApiConfig.apiService.placeBid(product.id, bid)
+
+                if (apiResponse.success) {
+                    val updated = product.copy(
+                        currentPrice = amount,
+                        bidsCount = product.bidsCount + 1
+                    )
+                    _uiState.value = AuctionDetailUiState(updated)
+                } else {
+                    _uiState.value = state.copy(isLoading = false, error = "Error al ofertar")
+                }
+            } catch (e: Exception) {
+                _uiState.value = state.copy(isLoading = false, error = e.localizedMessage ?: "Error desconocido")
+            }
+        }
+    }
