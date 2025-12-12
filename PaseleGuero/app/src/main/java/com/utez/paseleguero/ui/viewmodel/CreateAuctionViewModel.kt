@@ -57,3 +57,17 @@ class CreateAuctionViewModel : ViewModel() {
         val startingPrice = _uiState.value.startingPrice.toDoubleOrNull() ?: 0.0
         val duration = _uiState.value.durationHours.toLongOrNull() ?: 24
         val endTime = System.currentTimeMillis() + duration * 3600_000
+        val product = Product(
+            id = UUID.randomUUID().toString(),
+            title = title,
+            description = description,
+            startingPrice = startingPrice,
+            currentPrice = startingPrice,
+            endTime = endTime,
+            ownerId = userId,
+            ownerName = userName,
+            status = "active",
+            imageUrl = _uiState.value.imageUri?.toString() ?: "",
+            bidsCount = 0,
+            createdAt = System.currentTimeMillis()
+        )
