@@ -14,3 +14,24 @@ data class AuctionDetailUiState(
     val isLoading: Boolean = false,
     val error: String? = null
 )
+class AuctionDetailViewModel(private val productId: String) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<AuctionDetailUiState?>(null)
+    val uiState: StateFlow<AuctionDetailUiState?> = _uiState
+
+    init { loadProduct() }
+
+    private fun emptyProduct() = Product(
+        id = "",
+        title = "",
+        description = "",
+        startingPrice = 0.0,
+        currentPrice = 0.0,
+        endTime = 0L,
+        ownerId = "",
+        ownerName = "",
+        status = "",
+        imageUrl = "",
+        bidsCount = 0,
+        createdAt = 0L
+    )
