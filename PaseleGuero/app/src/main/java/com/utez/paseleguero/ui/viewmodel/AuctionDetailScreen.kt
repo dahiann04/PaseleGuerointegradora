@@ -52,4 +52,40 @@ fun AuctionDetailScreen(
             }
             return@Scaffold
         }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            AsyncImage(
+                model = product.imageUrl.ifBlank { null },
+                contentDescription = product.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            Text(
+                text = product.title.ifBlank { "Sin título" },
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = "Precio actual: $formattedPrice",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Text(
+                text = "Descripción: ${product.description}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Text(
+                text = "Pujas: ${product.bidsCount}",
+                style = MaterialTheme.typography.bodySmall
+            )
 
