@@ -112,3 +112,31 @@ fun CreateAuctionScreen(
                     Spacer(Modifier.width(8.dp))
                     Text(if (uiState.imageUri == null) "Tomar Foto" else "Cambiar Foto")
                 }
+                OutlinedTextField(
+                    value = uiState.title,
+                    onValueChange = viewModel::updateTitle,
+                    label = { Text("Título") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = uiState.description,
+                    onValueChange = viewModel::updateDescription,
+                    label = { Text("Descripción") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3
+                )
+
+                OutlinedTextField(
+                    value = uiState.startingPrice,
+                    onValueChange = viewModel::updateStartingPrice,
+                    label = { Text("Precio inicial") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = uiState.durationHours,
+                    onValueChange = viewModel::updateDuration,
+                    label = { Text("Duración (horas)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
