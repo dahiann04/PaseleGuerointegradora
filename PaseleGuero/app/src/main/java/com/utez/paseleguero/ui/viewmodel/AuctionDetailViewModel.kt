@@ -131,3 +131,17 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
             }
         }
     }
+    fun placeBid(amount: Double) {
+        val state = _uiState.value ?: return
+        val product = state.product
+
+        viewModelScope.launch {
+            _uiState.value = state.copy(isLoading = true)
+            try {
+                val bid = Bid(
+                    id = "",
+                    productId = product.id,
+                    userId = "123",
+                    amount = amount,
+                    timestamp = System.currentTimeMillis()
+                )
