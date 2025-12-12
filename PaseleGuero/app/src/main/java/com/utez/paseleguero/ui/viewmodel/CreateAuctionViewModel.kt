@@ -47,3 +47,13 @@ class CreateAuctionViewModel : ViewModel() {
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
     }
+    fun createAuction(
+        file: File?,
+        userId: String,
+        userName: String
+    ) {
+        val title = _uiState.value.title
+        val description = _uiState.value.description
+        val startingPrice = _uiState.value.startingPrice.toDoubleOrNull() ?: 0.0
+        val duration = _uiState.value.durationHours.toLongOrNull() ?: 24
+        val endTime = System.currentTimeMillis() + duration * 3600_000
