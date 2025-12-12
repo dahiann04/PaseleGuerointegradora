@@ -13,3 +13,6 @@ class AuctionRepository {
 suspend fun getAllProducts(): List<Product> = withContext(Dispatchers.IO) {
     api.getProducts().data ?: emptyList()
 }
+suspend fun createProduct(product: Product): Product? = withContext(Dispatchers.IO) {
+    api.createProduct(product).data
+}
