@@ -84,5 +84,29 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(20.dp))
+        Button(
+            onClick = {
+                viewModel.login {
+                    navController.navigate("home") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !isLoading
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(20.dp),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Spacer(Modifier.width(8.dp))
+                Text("Iniciando sesión...")
+            } else {
+                Text("Aceptar")
+            }
+        }
+    }
+}
 
 
