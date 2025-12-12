@@ -54,4 +54,25 @@ fun LoginScreen(
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+        OutlinedTextField(
+            value = username,
+            onValueChange = { viewModel.updateUsername(it) },
+            label = { Text("Usuario") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            enabled = !isLoading
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { viewModel.updatePassword(it) },
+            label = { Text("Contraseña") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            enabled = !isLoading
+        )
+
 
