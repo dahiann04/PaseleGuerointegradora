@@ -15,3 +15,13 @@ class ProductViewModel(private val repository: AuctionRepository) : ViewModel() 
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> get() = _error
+    
+    fun loadProducts() {
+        viewModelScope.launch {
+            try {
+                _products.value = repository.getAllProducts()
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
