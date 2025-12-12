@@ -25,7 +25,7 @@ class ProductViewModel(private val repository: AuctionRepository) : ViewModel() 
             }
         }
     }
- 
+
     fun createProduct(product: Product, onComplete: () -> Unit = {}) {
         viewModelScope.launch {
             try {
@@ -37,3 +37,16 @@ class ProductViewModel(private val repository: AuctionRepository) : ViewModel() 
             }
         }
     }
+ 
+    fun updateProduct(product: Product, onComplete: () -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                repository.updateProduct(product)
+                loadProducts()
+                onComplete()
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
