@@ -80,3 +80,16 @@ class AuctionDetailViewModel(private val productId: String) : ViewModel() {
             }
         }
     }
+    fun deleteAuction(onDeleted: () -> Unit) {
+        val state = _uiState.value ?: return
+        viewModelScope.launch {
+            _uiState.value = state.copy(isLoading = true)
+            try {
+                val apiResponse = ApiConfig.apiService.deleteProduct(state.product.id)
+                if (apiResponse.success) onDeleted()
+                else _uiState.value = state.copy(isLoading = false, error = "Error al eliminar")
+            } catch (e: Exception) {
+                _uiState.value = state.copy(isLoading = false, error = e.localizedMessage ?: "Error desconocido")
+            }
+        }
+    }
